@@ -42,8 +42,6 @@
             --whatsapp-2: #159a4d;
             --telegram-1: #33a9e8;
             --telegram-2: #1d7fb7;
-            --share-1: #7c5cff;
-            --share-2: #5d41d9;
             --copy-1: #7b8794;
             --copy-2: #5b6570;
             --image-1: #f59e0b;
@@ -298,35 +296,11 @@
             pointer-events: none;
         }
 
-        .result-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 6px 14px;
-            margin-bottom: 12px;
-            border-radius: 999px;
-            background: rgba(255,255,255,0.16);
-            border: 1px solid rgba(255,255,255,0.20);
-            backdrop-filter: blur(8px);
-            font-size: 0.82rem;
-            font-weight: 900;
-            letter-spacing: .2px;
-        }
-
         .stage-title {
             font-size: 1.12rem;
             font-weight: 900;
             line-height: 1.9;
             margin-bottom: 2px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .stage-subtitle {
-            font-size: 0.82rem;
-            font-weight: 700;
-            opacity: 0.95;
-            margin-top: 4px;
             position: relative;
             z-index: 1;
         }
@@ -683,7 +657,7 @@
                 <div class="name">تصميم أ. خالد محمد الحربي® 2026</div>
                 <div class="version">0504509080</div>
                 <div class="version">allihaibi@gmail.com</div>
-                <div class="version">Version 4.0 Elite</div>
+                <div class="version">Version 3.2 Elite</div>
             </div>
         </div>
     </div>
@@ -891,9 +865,7 @@
             lastStageText = text;
 
             stageOut.innerHTML = `
-                <div class="result-badge">النتيجة النهائية</div>
                 <div class="stage-title">${text}</div>
-                <div class="stage-subtitle">العمر محسوب حتى تاريخ 24 / 08 / 2026</div>
 
                 <div class="capture-meta">
                     <div><strong>تاريخ الميلاد:</strong> ${lastBirthDateText}</div>
@@ -921,7 +893,7 @@
             lastResultText =
 `نتيجة حاسبة الصف المستحق
 تاريخ الميلاد: ${lastBirthDateText}
-العمر حتى 24/08/2026:
+العمر:
 ${lastAgeText}
 النتيجة: ${text}`;
         }
