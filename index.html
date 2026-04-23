@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>الحاسبة المطورة للعام الدراسي 1448هـ - Elite</title>
+    <title>الحاسبة المطورة للعام الدراسي 1448هـ - Elite Story</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -273,7 +273,7 @@
             position: relative;
             overflow: hidden;
             border-radius: 24px;
-            padding: 18px 16px 12px;
+            padding: 18px 16px 14px;
             color: #fff;
             text-align: center;
             box-shadow: 0 16px 30px rgba(0,0,0,0.14);
@@ -365,16 +365,6 @@
             opacity: 0.96;
         }
 
-        .designer-mark {
-            position: relative;
-            z-index: 1;
-            margin-top: 10px;
-            font-size: 0.52rem;
-            font-weight: 700;
-            opacity: 0.82;
-            letter-spacing: .2px;
-        }
-
         .share-panel {
             margin-top: 14px;
             padding: 14px;
@@ -463,7 +453,6 @@
             font-weight: 700;
         }
 
-        /* منطقة خاصة بإنشاء صورة أفخم */
         .share-capture-wrapper {
             position: fixed;
             inset: 0;
@@ -474,12 +463,12 @@
 
         .share-capture-frame {
             width: 1080px;
-            min-height: 1350px;
-            padding: 70px;
+            height: 1920px;
+            padding: 90px 70px;
             background:
-                radial-gradient(circle at top right, rgba(200, 169, 107, 0.28), transparent 24%),
-                radial-gradient(circle at bottom left, rgba(11, 107, 91, 0.22), transparent 30%),
-                linear-gradient(135deg, #edf7f4, #fbf7ef, #f4efe5);
+                radial-gradient(circle at top right, rgba(200, 169, 107, 0.30), transparent 22%),
+                radial-gradient(circle at bottom left, rgba(11, 107, 91, 0.24), transparent 28%),
+                linear-gradient(160deg, #edf7f4 0%, #fbf7ef 48%, #f4efe5 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -488,12 +477,48 @@
         .share-capture-card {
             width: 100%;
             max-width: 760px;
-            border-radius: 40px;
-            padding: 26px;
-            background: rgba(255,255,255,0.35);
+            border-radius: 42px;
+            padding: 28px;
+            background: rgba(255,255,255,0.34);
             border: 1px solid rgba(255,255,255,0.55);
             box-shadow: 0 35px 80px rgba(4, 56, 48, 0.16);
             backdrop-filter: blur(12px);
+        }
+
+        .story-header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--primary-dark);
+        }
+
+        .story-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.72);
+            color: var(--primary-dark);
+            border: 1px solid rgba(11, 107, 91, 0.08);
+            box-shadow: 0 10px 24px rgba(4, 56, 48, 0.08);
+            font-size: 1rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+
+        .story-title {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 900;
+            line-height: 1.7;
+            color: var(--primary-dark);
+        }
+
+        .story-subtitle {
+            margin-top: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--muted);
         }
 
         @keyframes fadeUp {
@@ -668,7 +693,7 @@
                                 <path d="M15 8L19 12L15 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                             </svg>
-                            مشاركة النتيجة كصورة
+                            مشاركة النتيجة كصورة Story
                         </div>
 
                         <div class="share-actions">
@@ -713,12 +738,11 @@
                 <div class="name">تصميم أ. خالد محمد الحربي® 2026</div>
                 <div class="version">0504509080</div>
                 <div class="version">allihaibi@gmail.com</div>
-                <div class="version">Version 3.4 Elite</div>
+                <div class="version">Version 4.0 Elite</div>
             </div>
         </div>
     </div>
 
-    <!-- منطقة الالتقاط الخاصة -->
     <div id="shareCaptureWrapper" class="share-capture-wrapper">
         <div class="share-capture-frame">
             <div class="share-capture-card" id="shareCaptureCard"></div>
@@ -983,8 +1007,6 @@ ${lastAgeText}
                         <span class="age-label">أيام</span>
                     </div>
                 </div>
-
-                <div class="designer-mark">تصميم أ. خالد محمد الحربي®</div>
             `;
         }
 
@@ -1026,18 +1048,23 @@ ${lastAgeText}
             const wrapper = document.getElementById("shareCaptureWrapper");
             const card = document.getElementById("shareCaptureCard");
 
-            const yearsMatch = lastAgeText.match(/^(\d+)\s/);
             const ageParts = lastAgeText.split(" - ");
             const years = ageParts[0]?.match(/\d+/)?.[0] || "0";
             const months = ageParts[1]?.match(/\d+/)?.[0] || "0";
             const days = ageParts[2]?.match(/\d+/)?.[0] || "0";
 
             card.innerHTML = `
+                <div class="story-header">
+                    <div class="story-badge">حساب الصف المستحق</div>
+                    <h2 class="story-title">نتيجة الطالب</h2>
+                    <div class="story-subtitle">للعام الدراسي 1448 هـ</div>
+                </div>
+
                 <div class="stage" style="
                     display:block;
                     background: linear-gradient(135deg, ${lastResolvedColor}, ${darkenColor(lastResolvedColor)});
-                    border-radius: 30px;
-                    padding: 28px 24px 18px;
+                    border-radius: 34px;
+                    padding: 28px 24px 24px;
                     box-shadow: 0 26px 50px rgba(0,0,0,0.16);
                 ">
                     ${createStageMarkup(lastStageText, lastBirthDateText, lastAgeText, years, months, days)}
@@ -1070,7 +1097,6 @@ ${lastAgeText}
 
             try {
                 const { card } = createShareCaptureElement();
-
                 await new Promise(resolve => setTimeout(resolve, 120));
 
                 const canvas = await html2canvas(card, {
@@ -1093,16 +1119,16 @@ ${lastAgeText}
             const url = URL.createObjectURL(blob);
             const link = document.createElement("a");
             link.href = url;
-            link.download = "نتيجة-حاسبة-الصف-المستحق.png";
+            link.download = "نتيجة-حاسبة-الصف-المستحق-story.png";
             link.click();
             setTimeout(() => URL.revokeObjectURL(url), 1500);
         }
 
         async function shareImageToApp(appName) {
             try {
-                showCopyStatus("جارٍ تجهيز صورة المشاركة...");
+                showCopyStatus("جارٍ تجهيز صورة Story...");
                 const blob = await generateResultBlob();
-                const file = new File([blob], "نتيجة-حاسبة-الصف-المستحق.png", { type: "image/png" });
+                const file = new File([blob], "نتيجة-حاسبة-الصف-المستحق-story.png", { type: "image/png" });
 
                 if (navigator.canShare && navigator.canShare({ files: [file] }) && navigator.share) {
                     await navigator.share({
@@ -1110,9 +1136,9 @@ ${lastAgeText}
                         text: appName === "whatsapp" ? "مشاركة الصورة عبر واتساب" : "مشاركة الصورة عبر تليجرام",
                         files: [file]
                     });
-                    showCopyStatus("تم فتح نافذة مشاركة الصورة. اختر التطبيق المطلوب.");
+                    showCopyStatus("تم فتح نافذة مشاركة صورة Story. اختر التطبيق المطلوب.");
                 } else {
-                    showCopyStatus("هذا الجهاز لا يدعم إرسال الصورة مباشرة من المتصفح. تم حفظ الصورة بدلًا من ذلك.");
+                    showCopyStatus("هذا الجهاز لا يدعم إرسال الصورة مباشرة من المتصفح. تم حفظ صورة Story بدلًا من ذلك.");
                     await saveBlobAsImage(blob);
                 }
             } catch (error) {
@@ -1124,24 +1150,24 @@ ${lastAgeText}
                 try {
                     const blob = await generateResultBlob();
                     await saveBlobAsImage(blob);
-                    showCopyStatus("تعذر فتح المشاركة المباشرة. تم حفظ الصورة بدلًا من ذلك.");
+                    showCopyStatus("تعذر فتح المشاركة المباشرة. تم حفظ صورة Story بدلًا من ذلك.");
                 } catch {
-                    showCopyStatus("تعذر تجهيز صورة المشاركة.");
+                    showCopyStatus("تعذر تجهيز صورة Story.");
                 }
             }
         }
 
         async function saveResultAsImage() {
             try {
-                showCopyStatus("جارٍ تجهيز الصورة...");
+                showCopyStatus("جارٍ تجهيز صورة Story...");
                 const blob = await generateResultBlob();
                 await saveBlobAsImage(blob);
-                showCopyStatus("تم حفظ النتيجة كصورة بنجاح.");
+                showCopyStatus("تم حفظ صورة Story بنجاح.");
             } catch (error) {
                 if (error.message === "no-result") {
                     showCopyStatus("قم بحساب النتيجة أولاً قبل حفظها كصورة.");
                 } else {
-                    showCopyStatus("تعذر حفظ النتيجة كصورة. حاول مرة أخرى.");
+                    showCopyStatus("تعذر حفظ صورة Story. حاول مرة أخرى.");
                 }
             }
         }
