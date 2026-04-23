@@ -463,6 +463,39 @@
             font-weight: 700;
         }
 
+        /* منطقة خاصة بإنشاء صورة أفخم */
+        .share-capture-wrapper {
+            position: fixed;
+            inset: 0;
+            z-index: -9999;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .share-capture-frame {
+            width: 1080px;
+            min-height: 1350px;
+            padding: 70px;
+            background:
+                radial-gradient(circle at top right, rgba(200, 169, 107, 0.28), transparent 24%),
+                radial-gradient(circle at bottom left, rgba(11, 107, 91, 0.22), transparent 30%),
+                linear-gradient(135deg, #edf7f4, #fbf7ef, #f4efe5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .share-capture-card {
+            width: 100%;
+            max-width: 760px;
+            border-radius: 40px;
+            padding: 26px;
+            background: rgba(255,255,255,0.35);
+            border: 1px solid rgba(255,255,255,0.55);
+            box-shadow: 0 35px 80px rgba(4, 56, 48, 0.16);
+            backdrop-filter: blur(12px);
+        }
+
         @keyframes fadeUp {
             from {
                 opacity: 0;
@@ -680,8 +713,15 @@
                 <div class="name">تصميم أ. خالد محمد الحربي® 2026</div>
                 <div class="version">0504509080</div>
                 <div class="version">allihaibi@gmail.com</div>
-                <div class="version">Version 3.3 Elite</div>
+                <div class="version">Version 3.4 Elite</div>
             </div>
+        </div>
+    </div>
+
+    <!-- منطقة الالتقاط الخاصة -->
+    <div id="shareCaptureWrapper" class="share-capture-wrapper">
+        <div class="share-capture-frame">
+            <div class="share-capture-card" id="shareCaptureCard"></div>
         </div>
     </div>
 
@@ -706,6 +746,7 @@
         let lastBirthDateText = "";
         let lastAgeText = "";
         let lastStageText = "";
+        let lastResolvedColor = "";
 
         window.onload = function () {
             const hDay = document.getElementById("hDay");
@@ -886,8 +927,21 @@
             lastBirthDateText = `${String(d).padStart(2, "0")}/${String(m).padStart(2, "0")}/${y}`;
             lastAgeText = `${years} سنة - ${months} شهر - ${days} يوم`;
             lastStageText = text;
+            lastResolvedColor = resolveColor(color);
 
-            stageOut.innerHTML = `
+            stageOut.innerHTML = createStageMarkup(text, lastBirthDateText, lastAgeText, years, months, days);
+            stageOut.style.background = `linear-gradient(135deg, ${lastResolvedColor}, ${darkenColor(lastResolvedColor)})`;
+
+            lastResultText =
+`نتيجة حاسبة الصف المستحق
+تاريخ الميلاد: ${lastBirthDateText}
+العمر:
+${lastAgeText}
+النتيجة: ${text}`;
+        }
+
+        function createStageMarkup(text, birthDate, ageText, years, months, days) {
+            return `
                 <div class="stage-top-icons">
                     <div class="mini-icon">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -911,8 +965,8 @@
                 <div class="stage-title">${text}</div>
 
                 <div class="capture-meta">
-                    <div><strong>تاريخ الميلاد:</strong> ${lastBirthDateText}</div>
-                    <div><strong>العمر:</strong> ${lastAgeText}</div>
+                    <div><strong>تاريخ الميلاد:</strong> ${birthDate}</div>
+                    <div><strong>العمر:</strong> ${ageText}</div>
                 </div>
 
                 <div class="age-cards">
@@ -932,15 +986,6 @@
 
                 <div class="designer-mark">تصميم أ. خالد محمد الحربي®</div>
             `;
-
-            stageOut.style.background = `linear-gradient(135deg, ${resolveColor(color)}, ${darkenColor(resolveColor(color))})`;
-
-            lastResultText =
-`نتيجة حاسبة الصف المستحق
-تاريخ الميلاد: ${lastBirthDateText}
-العمر:
-${lastAgeText}
-النتيجة: ${text}`;
         }
 
         function resolveColor(variableName) {
@@ -975,29 +1020,87 @@ ${lastAgeText}
             }
         }
 
-        async function generateResultBlob() {
-            const captureCard = document.getElementById("captureCard");
-            const stageOutput = document.getElementById("stageOutput");
+        function createShareCaptureElement() {
+            if (!lastResultText) throw new Error("no-result");
 
-            if (!lastResultText || stageOutput.style.display === "none") {
+            const wrapper = document.getElementById("shareCaptureWrapper");
+            const card = document.getElementById("shareCaptureCard");
+
+            const yearsMatch = lastAgeText.match(/^(\d+)\s/);
+            const ageParts = lastAgeText.split(" - ");
+            const years = ageParts[0]?.match(/\d+/)?.[0] || "0";
+            const months = ageParts[1]?.match(/\d+/)?.[0] || "0";
+            const days = ageParts[2]?.match(/\d+/)?.[0] || "0";
+
+            card.innerHTML = `
+                <div class="stage" style="
+                    display:block;
+                    background: linear-gradient(135deg, ${lastResolvedColor}, ${darkenColor(lastResolvedColor)});
+                    border-radius: 30px;
+                    padding: 28px 24px 18px;
+                    box-shadow: 0 26px 50px rgba(0,0,0,0.16);
+                ">
+                    ${createStageMarkup(lastStageText, lastBirthDateText, lastAgeText, years, months, days)}
+                </div>
+            `;
+
+            wrapper.style.opacity = "1";
+            wrapper.style.zIndex = "9999";
+
+            return { wrapper, card };
+        }
+
+        function cleanupShareCapture() {
+            const wrapper = document.getElementById("shareCaptureWrapper");
+            const card = document.getElementById("shareCaptureCard");
+            wrapper.style.opacity = "0";
+            wrapper.style.zIndex = "-9999";
+            card.innerHTML = "";
+        }
+
+        async function generateResultBlob() {
+            const sharePanel = document.getElementById("sharePanel");
+
+            if (!lastResultText) {
                 throw new Error("no-result");
             }
 
-            const canvas = await html2canvas(captureCard, {
-                backgroundColor: null,
-                scale: 3,
-                useCORS: true
-            });
+            const originalDisplay = sharePanel.style.display;
+            sharePanel.style.display = "none";
 
-            const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
-            if (!blob) throw new Error("blob-failed");
-            return blob;
+            try {
+                const { card } = createShareCaptureElement();
+
+                await new Promise(resolve => setTimeout(resolve, 120));
+
+                const canvas = await html2canvas(card, {
+                    backgroundColor: null,
+                    scale: 2.5,
+                    useCORS: true
+                });
+
+                const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
+                if (!blob) throw new Error("blob-failed");
+
+                return blob;
+            } finally {
+                cleanupShareCapture();
+                sharePanel.style.display = originalDisplay || "block";
+            }
+        }
+
+        async function saveBlobAsImage(blob) {
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "نتيجة-حاسبة-الصف-المستحق.png";
+            link.click();
+            setTimeout(() => URL.revokeObjectURL(url), 1500);
         }
 
         async function shareImageToApp(appName) {
             try {
-                showCopyStatus("جارٍ تجهيز الصورة للمشاركة...");
-
+                showCopyStatus("جارٍ تجهيز صورة المشاركة...");
                 const blob = await generateResultBlob();
                 const file = new File([blob], "نتيجة-حاسبة-الصف-المستحق.png", { type: "image/png" });
 
@@ -1009,7 +1112,7 @@ ${lastAgeText}
                     });
                     showCopyStatus("تم فتح نافذة مشاركة الصورة. اختر التطبيق المطلوب.");
                 } else {
-                    showCopyStatus("هذا الجهاز لا يدعم مشاركة الصورة مباشرة من المتصفح. سيتم حفظ الصورة بدلًا من ذلك.");
+                    showCopyStatus("هذا الجهاز لا يدعم إرسال الصورة مباشرة من المتصفح. تم حفظ الصورة بدلًا من ذلك.");
                     await saveBlobAsImage(blob);
                 }
             } catch (error) {
@@ -1017,23 +1120,15 @@ ${lastAgeText}
                     showCopyStatus("قم بحساب النتيجة أولاً قبل مشاركتها.");
                     return;
                 }
-                showCopyStatus("تعذر فتح مشاركة الصورة مباشرة. سيتم حفظ الصورة بدلًا من ذلك.");
+
                 try {
                     const blob = await generateResultBlob();
                     await saveBlobAsImage(blob);
-                } catch (e) {
-                    showCopyStatus("تعذر تجهيز الصورة للمشاركة.");
+                    showCopyStatus("تعذر فتح المشاركة المباشرة. تم حفظ الصورة بدلًا من ذلك.");
+                } catch {
+                    showCopyStatus("تعذر تجهيز صورة المشاركة.");
                 }
             }
-        }
-
-        async function saveBlobAsImage(blob) {
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement("a");
-            link.href = url;
-            link.download = "نتيجة-حاسبة-الصف-المستحق.png";
-            link.click();
-            setTimeout(() => URL.revokeObjectURL(url), 1000);
         }
 
         async function saveResultAsImage() {
