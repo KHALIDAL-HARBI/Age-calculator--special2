@@ -17,9 +17,7 @@
             --card-bg: rgba(255, 255, 255, 0.94);
             --primary: #0b6b5b;
             --primary-dark: #06483e;
-            --primary-soft: rgba(11, 107, 91, 0.10);
             --accent: #c8a96b;
-            --accent-dark: #a98439;
             --accent-soft: #f8efde;
             --text: #18312c;
             --muted: #64756f;
@@ -27,8 +25,6 @@
             --shadow: 0 22px 55px rgba(4, 56, 48, 0.12);
             --shadow-soft: 0 14px 35px rgba(4, 56, 48, 0.08);
             --radius-xl: 28px;
-            --radius-lg: 20px;
-            --radius-md: 16px;
 
             --success: #1f7a47;
             --info: #0f6c78;
@@ -143,9 +139,6 @@
             box-shadow: var(--shadow);
             animation: fadeUp 0.85s ease both;
         }
-
-        .card:nth-child(2) { animation-delay: 0.08s; }
-        .card:nth-child(3) { animation-delay: 0.16s; }
 
         .card-header {
             display: flex;
@@ -280,7 +273,7 @@
             position: relative;
             overflow: hidden;
             border-radius: 24px;
-            padding: 18px 16px 16px;
+            padding: 18px 16px 12px;
             color: #fff;
             text-align: center;
             box-shadow: 0 16px 30px rgba(0,0,0,0.14);
@@ -294,6 +287,26 @@
                 radial-gradient(circle at top left, rgba(255,255,255,0.18), transparent 30%),
                 linear-gradient(to bottom, rgba(255,255,255,0.06), transparent);
             pointer-events: none;
+        }
+
+        .stage-top-icons {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .mini-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 999px;
+            display: grid;
+            place-items: center;
+            background: rgba(255,255,255,0.14);
+            border: 1px solid rgba(255,255,255,0.18);
+            backdrop-filter: blur(8px);
         }
 
         .stage-title {
@@ -350,6 +363,16 @@
             font-size: 0.82rem;
             font-weight: 800;
             opacity: 0.96;
+        }
+
+        .designer-mark {
+            position: relative;
+            z-index: 1;
+            margin-top: 10px;
+            font-size: 0.52rem;
+            font-weight: 700;
+            opacity: 0.82;
+            letter-spacing: .2px;
         }
 
         .share-panel {
@@ -612,11 +635,11 @@
                                 <path d="M15 8L19 12L15 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                             </svg>
-                            مشاركة النتيجة
+                            مشاركة النتيجة كصورة
                         </div>
 
                         <div class="share-actions">
-                            <button class="share-btn share-whatsapp" onclick="shareWhatsApp()">
+                            <button class="share-btn share-whatsapp" onclick="shareImageToApp('whatsapp')">
                                 <svg width="18" height="18" viewBox="0 0 32 32" fill="currentColor">
                                     <path d="M19.11 17.21c-.27-.14-1.58-.78-1.82-.87-.24-.09-.41-.14-.58.14-.17.27-.67.87-.82 1.05-.15.18-.31.2-.58.07-.27-.14-1.12-.41-2.14-1.31-.79-.7-1.33-1.57-1.49-1.84-.15-.27-.02-.41.12-.54.12-.12.27-.31.41-.46.14-.15.18-.27.27-.46.09-.18.05-.35-.02-.49-.07-.14-.58-1.4-.8-1.92-.21-.5-.43-.43-.58-.44h-.5c-.18 0-.46.07-.7.35-.24.27-.92.9-.92 2.2s.94 2.55 1.07 2.73c.14.18 1.85 2.82 4.49 3.96.63.27 1.13.43 1.52.55.64.2 1.22.17 1.68.1.51-.08 1.58-.65 1.81-1.28.22-.63.22-1.16.15-1.27-.06-.11-.24-.17-.51-.31z"/>
                                     <path d="M16 3C8.82 3 3 8.82 3 16c0 2.53.72 4.99 2.09 7.11L3.5 28.5l5.54-1.45A12.93 12.93 0 0 0 16 29c7.18 0 13-5.82 13-13S23.18 3 16 3zm0 23.64c-2.08 0-4.12-.56-5.9-1.62l-.42-.25-3.29.86.88-3.21-.27-.44A10.62 10.62 0 0 1 5.36 16C5.36 10.12 10.12 5.36 16 5.36S26.64 10.12 26.64 16 21.88 26.64 16 26.64z"/>
@@ -624,7 +647,7 @@
                                 واتساب
                             </button>
 
-                            <button class="share-btn share-telegram" onclick="shareTelegram()">
+                            <button class="share-btn share-telegram" onclick="shareImageToApp('telegram')">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M21.5 4.5L18.3 19c-.2 1-.8 1.2-1.6.7l-4.4-3.2-2.1 2c-.2.2-.4.4-.8.4l.3-4.5 8.2-7.4c.4-.3-.1-.5-.5-.2l-10.1 6.4-4.4-1.4c-1-.3-1-.9.2-1.4l17.3-6.7c.8-.3 1.5.2 1.2 1.5z"/>
                                 </svg>
@@ -657,7 +680,7 @@
                 <div class="name">تصميم أ. خالد محمد الحربي® 2026</div>
                 <div class="version">0504509080</div>
                 <div class="version">allihaibi@gmail.com</div>
-                <div class="version">Version 3.2 Elite</div>
+                <div class="version">Version 3.3 Elite</div>
             </div>
         </div>
     </div>
@@ -865,6 +888,26 @@
             lastStageText = text;
 
             stageOut.innerHTML = `
+                <div class="stage-top-icons">
+                    <div class="mini-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M8 2V5M16 2V5M3 9H21M5 4H19C20.1046 4 21 4.89543 21 6V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V6C3 4.89543 3.89543 4 5 4Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="mini-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 14C15.3137 14 18 11.3137 18 8C18 4.68629 15.3137 2 12 2C8.68629 2 6 4.68629 6 8C6 11.3137 8.68629 14 12 14Z" stroke="currentColor" stroke-width="1.6"/>
+                            <path d="M4 21C4.85038 18.1085 7.17792 16 12 16C16.8221 16 19.1496 18.1085 20 21" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="mini-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 8V12L15 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/>
+                        </svg>
+                    </div>
+                </div>
+
                 <div class="stage-title">${text}</div>
 
                 <div class="capture-meta">
@@ -886,6 +929,8 @@
                         <span class="age-label">أيام</span>
                     </div>
                 </div>
+
+                <div class="designer-mark">تصميم أ. خالد محمد الحربي®</div>
             `;
 
             stageOut.style.background = `linear-gradient(135deg, ${resolveColor(color)}, ${darkenColor(resolveColor(color))})`;
@@ -919,54 +964,90 @@ ${lastAgeText}
             return lastResultText || "لم يتم حساب النتيجة بعد.";
         }
 
-        function shareWhatsApp() {
-            const text = getShareText();
-            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
-        }
-
-        function shareTelegram() {
-            const text = getShareText();
-            window.open(`https://t.me/share/url?text=${encodeURIComponent(text)}`, "_blank");
-        }
-
         async function copyResult() {
             const text = getShareText();
 
             try {
                 await navigator.clipboard.writeText(text);
-                showCopyStatus("تم نسخ النتيجة بنجاح.");
+                showCopyStatus("تم نسخ النتيجة النصية بنجاح.");
             } catch (error) {
-                showCopyStatus("تعذر نسخ النتيجة تلقائيًا، يرجى المحاولة من متصفح يدعم النسخ.");
+                showCopyStatus("تعذر نسخ النتيجة تلقائيًا.");
             }
         }
 
-        async function saveResultAsImage() {
+        async function generateResultBlob() {
             const captureCard = document.getElementById("captureCard");
             const stageOutput = document.getElementById("stageOutput");
 
             if (!lastResultText || stageOutput.style.display === "none") {
-                showCopyStatus("قم بحساب النتيجة أولاً قبل حفظها كصورة.");
-                return;
+                throw new Error("no-result");
             }
 
+            const canvas = await html2canvas(captureCard, {
+                backgroundColor: null,
+                scale: 3,
+                useCORS: true
+            });
+
+            const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
+            if (!blob) throw new Error("blob-failed");
+            return blob;
+        }
+
+        async function shareImageToApp(appName) {
+            try {
+                showCopyStatus("جارٍ تجهيز الصورة للمشاركة...");
+
+                const blob = await generateResultBlob();
+                const file = new File([blob], "نتيجة-حاسبة-الصف-المستحق.png", { type: "image/png" });
+
+                if (navigator.canShare && navigator.canShare({ files: [file] }) && navigator.share) {
+                    await navigator.share({
+                        title: "نتيجة حاسبة الصف المستحق",
+                        text: appName === "whatsapp" ? "مشاركة الصورة عبر واتساب" : "مشاركة الصورة عبر تليجرام",
+                        files: [file]
+                    });
+                    showCopyStatus("تم فتح نافذة مشاركة الصورة. اختر التطبيق المطلوب.");
+                } else {
+                    showCopyStatus("هذا الجهاز لا يدعم مشاركة الصورة مباشرة من المتصفح. سيتم حفظ الصورة بدلًا من ذلك.");
+                    await saveBlobAsImage(blob);
+                }
+            } catch (error) {
+                if (error.message === "no-result") {
+                    showCopyStatus("قم بحساب النتيجة أولاً قبل مشاركتها.");
+                    return;
+                }
+                showCopyStatus("تعذر فتح مشاركة الصورة مباشرة. سيتم حفظ الصورة بدلًا من ذلك.");
+                try {
+                    const blob = await generateResultBlob();
+                    await saveBlobAsImage(blob);
+                } catch (e) {
+                    showCopyStatus("تعذر تجهيز الصورة للمشاركة.");
+                }
+            }
+        }
+
+        async function saveBlobAsImage(blob) {
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "نتيجة-حاسبة-الصف-المستحق.png";
+            link.click();
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+        }
+
+        async function saveResultAsImage() {
             try {
                 showCopyStatus("جارٍ تجهيز الصورة...");
-
-                const canvas = await html2canvas(captureCard, {
-                    backgroundColor: null,
-                    scale: 3,
-                    useCORS: true
-                });
-
-                const image = canvas.toDataURL("image/png");
-                const link = document.createElement("a");
-                link.href = image;
-                link.download = "نتيجة-حاسبة-الصف-المستحق.png";
-                link.click();
-
+                const blob = await generateResultBlob();
+                await saveBlobAsImage(blob);
                 showCopyStatus("تم حفظ النتيجة كصورة بنجاح.");
             } catch (error) {
-                showCopyStatus("تعذر حفظ النتيجة كصورة. حاول مرة أخرى.");
+                if (error.message === "no-result") {
+                    showCopyStatus("قم بحساب النتيجة أولاً قبل حفظها كصورة.");
+                } else {
+                    showCopyStatus("تعذر حفظ النتيجة كصورة. حاول مرة أخرى.");
+                }
             }
         }
     </script>
